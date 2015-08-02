@@ -1,53 +1,38 @@
 package org.glenlivet.core.concurrency;
 
 import java.util.List;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.springframework.util.Assert;
+import java.util.concurrent.TimeUnit;
 
 public class ConcurrentExecutor {
 
-	private List<ConcurrentExecution> crs;
-
-	public ConcurrentExecutor(List<ConcurrentExecution> runnables) {
-		Assert.isTrue(runnables != null, "The param cannot be null!");
-		crs = runnables;
+	public static final int NORMAL_SIZE = 10;
+	
+	private int threadPoolSize; 
+	
+	private List<Runnable> tasks;
+	
+	public ConcurrentExecutor(List<Runnable> tasks){
+		this(NORMAL_SIZE, tasks);
 	}
-
-	public void execute() {
-
-		ExecutorService executorService = Executors.newFixedThreadPool(crs
-				.size());
-		final CyclicBarrier cb = new CyclicBarrier(crs.size() + 1);
-		try {
-			for (final ConcurrentExecution ce : crs) {
-				executorService.execute(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							ce.execute();
-						} finally {
-							try {
-								cb.await();
-							} catch (InterruptedException
-									| BrokenBarrierException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-
-				});
-			}
-			cb.await();
-		} catch (InterruptedException | BrokenBarrierException e) {
-			e.printStackTrace();
-		}finally{
-			executorService.shutdown();
+	
+	public ConcurrentExecutor(int size, List<Runnable> tasks){
+		threadPoolSize = size;
+		this.tasks = tasks;
+	}
+	
+	public void execute(){
+		ExecutorService executorService = Executors.newFixedThreadPool(threadPoolSize);
+		for(Runnable r : tasks){
+			executorService.execute(r);
 		}
-
+		executorService.shutdown();
+		try {
+			executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

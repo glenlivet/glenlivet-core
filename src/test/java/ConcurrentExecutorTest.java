@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class ConcurrentExecutorTest {
 
-	@Test
+	//@Test
 	public void secondTest() {
 		ExecutorService executorService = Executors.newFixedThreadPool(5);
 		long start = new Date().getTime();
@@ -44,16 +44,16 @@ public class ConcurrentExecutorTest {
 		System.out.println("Time used: " + (end - start) / 1000);
 	}
 
-	//@Test
+	@Test
 	public void firstTest() {
-		List<ConcurrentExecution> cel = new ArrayList<ConcurrentExecution>();
+		List<Runnable> cel = new ArrayList<Runnable>();
 
-		ConcurrentExecution ce1 = new SysoutExecution("execution1");
-		ConcurrentExecution ce2 = new SysoutExecution("execution2");
-		ConcurrentExecution ce3 = new SysoutExecution("execution3");
-		ConcurrentExecution ce4 = new SysoutExecution("execution4");
-		ConcurrentExecution ce5 = new SysoutExecution("execution5");
-		ConcurrentExecution ce6 = new SysoutExecution("execution6");
+		Runnable ce1 = new SysoutExecution("execution1");
+		Runnable ce2 = new SysoutExecution("execution2");
+		Runnable ce3 = new SysoutExecution("execution3");
+		Runnable ce4 = new SysoutExecution("execution4");
+		Runnable ce5 = new SysoutExecution("execution5");
+		Runnable ce6 = new SysoutExecution("execution6");
 
 		cel.add(ce1);
 		cel.add(ce2);
@@ -71,7 +71,7 @@ public class ConcurrentExecutorTest {
 		System.out.println("Time used: " + (end - start) / 1000);
 	}
 
-	class SysoutExecution implements ConcurrentExecution {
+	class SysoutExecution implements Runnable {
 
 		String msg;
 
@@ -80,7 +80,7 @@ public class ConcurrentExecutorTest {
 		}
 
 		@Override
-		public void execute() {
+		public void run() {
 			String threadID = "[" + Thread.currentThread().getId() + "-"
 					+ Thread.currentThread().getName() + "]";
 			System.out.println(threadID + " " + msg);
