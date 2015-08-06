@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends CrudMapper<T>>
 		implements CrudService<T>, ApplicationContextAware {
 
-	private DbIdGenerator idService;
+	protected DbIdGenerator idService;
 
 	private K mapper;
 
