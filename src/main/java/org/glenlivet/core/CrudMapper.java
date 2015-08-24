@@ -6,6 +6,8 @@ import org.apache.ibatis.session.RowBounds;
 
 public interface CrudMapper<T extends BaseDomain> {
 	
+	public void addAll(List<T> object);
+	
 	public void add(T object);
 	
 	public void delete(T object);

@@ -6,6 +6,7 @@ import org.glenlivet.core.mybatis.PagingBounds;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.util.Assert;
 
 public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends CrudMapper<T>>
 		implements CrudService<T>, ApplicationContextAware {
@@ -17,9 +18,19 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 	private ApplicationContext context;
 	
 	public abstract Class<K> getMapperClass();
+	
+	@Override
+	public void addAll(List<T> list) {
+		for(T o : list){
+			Assert.isNull(o.getId());
+			o.setId(genId());
+		}
+		getMapper().addAll(list);
+	}
 
 	@Override
 	public void add(T object) {
+		Assert.isNull(object.getId());
 		object.setId(genId());
 		getMapper().add(object);
 	}
@@ -31,6 +42,7 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 
 	@Override
 	public void update(T object) {
+		Assert.isTrue(object.getId()!=null);
 		getMapper().update(object);
 	}
 

@@ -3,6 +3,8 @@ package org.glenlivet.core;
 import java.util.List;
 
 public interface CrudService<T extends BaseDomain> {
+	
+	public void addAll(List<T> object);
 
 	public void add(T object);
 
