@@ -46,17 +46,17 @@ public class SimpleCROSFilter implements Filter {
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		String paramAllowOrigin = config.getInitParameter(ACCESS_CONTROL_ALLOW_ORIGIN);
-		if(!StringUtils.isNotBlank(paramAllowOrigin)){
+		if(StringUtils.isNotBlank(paramAllowOrigin)){
 			allowOrigin = paramAllowOrigin;
 		}
 		
 		String paramAllowMethods = config.getInitParameter(ACCESS_CONTROL_ALLOW_METHODS);
-		if(!StringUtils.isNotBlank(paramAllowMethods)){
+		if(StringUtils.isNotBlank(paramAllowMethods)){
 			allowMethods = paramAllowMethods;
 		}
 		
 		String paramMaxAge = config.getInitParameter(ACCESS_CONTROL_MAX_AGE);
-		if(!StringUtils.isNotBlank(paramMaxAge)){
+		if(StringUtils.isNotBlank(paramMaxAge)){
 			try {
 				Integer.parseInt(paramMaxAge);
 				maxAge = paramMaxAge;
@@ -66,7 +66,7 @@ public class SimpleCROSFilter implements Filter {
 		}
 		
 		String paramAllowHeaders = config.getInitParameter(ACCESS_CONTROL_ALLOW_HEADERS);
-		if(!StringUtils.isNotBlank(paramAllowHeaders)){
+		if(StringUtils.isNotBlank(paramAllowHeaders)){
 			allowHeaders = paramAllowHeaders;
 		}
 		

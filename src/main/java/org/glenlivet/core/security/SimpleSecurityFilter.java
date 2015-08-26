@@ -41,12 +41,12 @@ public class SimpleSecurityFilter implements Filter {
 	public void init(FilterConfig config) throws ServletException {
 		this.springContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 		String paramTokenHeader = config.getInitParameter(TOKEN_HEADER);
-		if(!StringUtils.isNotBlank(paramTokenHeader)){
+		if(StringUtils.isNotBlank(paramTokenHeader)){
 			tokenHeader = paramTokenHeader;
 		}
 		
 		String paramtokenServiceBeanName = config.getInitParameter(TOKEN_SERVICE_NAME);
-		if(!StringUtils.isNoneBlank(paramtokenServiceBeanName)){
+		if(StringUtils.isNoneBlank(paramtokenServiceBeanName)){
 			tokenServiceBeanName = paramtokenServiceBeanName;
 		}
 		

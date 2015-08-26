@@ -13,9 +13,9 @@ public class ResponseBean<T> {
 	 */
 	private String message;
 
-	public ResponseBean(T content) {
+	public ResponseBean(T content, boolean success) {
 		this.content = content;
-		this.success = true;
+		this.success = success;
 	}
 
 	public ResponseBean(String message) {
