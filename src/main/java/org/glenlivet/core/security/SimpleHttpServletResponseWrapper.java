@@ -15,5 +15,4 @@ public class SimpleHttpServletResponseWrapper extends HttpServletResponseWrapper
 		super(response);
 	}
 	
-
 }

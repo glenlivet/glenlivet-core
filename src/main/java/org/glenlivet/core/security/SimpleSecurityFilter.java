@@ -9,12 +9,17 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class SimpleSecurityFilter implements Filter {
+	
+	static Logger logger = LoggerFactory.getLogger(SimpleSecurityFilter.class);
 	
 	private String tokenHeader = "Glenlivet-Token";
 	
@@ -24,17 +29,36 @@ public class SimpleSecurityFilter implements Filter {
 	
 	private TokenService tokenService;
 	
+	private static ThreadLocal<ServletRequest> localRequest;
+	
+	private static ThreadLocal<ServletResponse> localResponse;
+	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
+		handleThreadLocals(req, resp);
+		
 		HttpServletRequest request = (HttpServletRequest) req;
 		String token = request.getHeader(tokenHeader);
 		
 		UserDetails ud = tokenService.getUserDetailsByToken(token);
 		
 		request.setAttribute(UserDetails.ATTR_CURRENT_USER, ud);
-		
+//		new SimpleHttpServletResponseWrapper(response);
 		chain.doFilter(req, resp);
+		
+		logger.info("after chain.doFilter()");
+		removeThreadLocals();
+	}
+
+	private void removeThreadLocals() {
+		localRequest.remove();
+		localResponse.remove();
+	}
+
+	private void handleThreadLocals(ServletRequest req, ServletResponse resp) {
+		localRequest.set(req);
+		localResponse.set(resp);
 	}
 
 	@Override
@@ -52,6 +76,17 @@ public class SimpleSecurityFilter implements Filter {
 		
 		tokenService = springContext.getBean(tokenServiceBeanName, TokenService.class);
 		
+		localRequest = new ThreadLocal<ServletRequest>();
+		localResponse = new ThreadLocal<ServletResponse>();
+		
+	}
+	
+	public static HttpServletRequest getLocalRequest(){
+		return (HttpServletRequest) localRequest.get();
+	}
+	
+	public static HttpServletResponse getLocalResponse(){
+		return (HttpServletResponse) localResponse.get();
 	}
 	
 	@Override
