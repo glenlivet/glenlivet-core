@@ -19,6 +19,18 @@
 
 	</properties>
 
+	<distributionManagement>
+		<repository>
+			<id>glenlivet-release</id>
+			<name>Glenlivet Repository</name>
+			<url>http://localhost:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>glenlivet-snapshots</id>
+			<name>Glenlivet Snapshot Repository</name>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencies>
 		<!-- LOGGING -->
