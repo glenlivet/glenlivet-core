@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.glenlivet.core.concurrency.ConcurrentExecution;
 import org.glenlivet.core.concurrency.ConcurrentExecutor;
 import org.junit.Test;
 
