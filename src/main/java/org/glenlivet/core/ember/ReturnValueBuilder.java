@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class ReturnValueBuilder {
 	
-	public static <T> Map<String, T> buildSingleFind(String key, T obj){
-		Map<String, T> retValue = new HashMap<String, T>();
+	public static <T> Map<String, Object> buildSingleFind(String key, T obj){
+		Map<String, Object> retValue = new HashMap<String, Object>();
 		retValue.put(key, obj);
 		return retValue;
 	}
