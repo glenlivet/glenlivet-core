@@ -6,6 +6,8 @@ public interface UserDetails {
 	
 	public static final String ATTR_CURRENT_USER = "currentUser"; 
 	
+	public String getId();
+	
 	public String getUsername();
 	
 	public String getPassword();

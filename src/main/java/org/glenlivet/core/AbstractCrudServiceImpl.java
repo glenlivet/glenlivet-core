@@ -1,8 +1,11 @@
 package org.glenlivet.core;
 
+import java.util.Date;
 import java.util.List;
 
 import org.glenlivet.core.mybatis.PagingBounds;
+import org.glenlivet.core.security.SimpleSecurityFilter;
+import org.glenlivet.core.security.UserDetails;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -21,17 +24,24 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 	
 	@Override
 	public void addAll(List<T> list) {
+		UserDetails ud = SimpleSecurityFilter.getCurrentUserDetails();
 		for(T o : list){
 			Assert.isNull(o.getId());
 			o.setId(genId());
+			//set createdBy createdTime 
+			o.setCreatedBy(ud.getId());
+			o.setCreatedTime(new Date());
 		}
 		getMapper().addAll(list);
 	}
 
 	@Override
 	public void add(T object) {
+		UserDetails ud = SimpleSecurityFilter.getCurrentUserDetails();
 		Assert.isNull(object.getId());
 		object.setId(genId());
+		object.setCreatedBy(ud.getId());
+		object.setCreatedTime(new Date());
 		getMapper().add(object);
 	}
 
@@ -43,6 +53,9 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 	@Override
 	public void update(T object) {
 		Assert.isTrue(object.getId()!=null);
+		UserDetails ud = SimpleSecurityFilter.getCurrentUserDetails();
+		object.setUpdatedBy(ud.getId());
+		object.setUpdatedTime(new Date());
 		getMapper().update(object);
 	}
 

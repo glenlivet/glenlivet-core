@@ -18,35 +18,35 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class SimpleSecurityFilter implements Filter {
-	
+
 	static Logger logger = LoggerFactory.getLogger(SimpleSecurityFilter.class);
-	
+
 	private String tokenHeader = "Glenlivet-Token";
-	
+
 	private String tokenServiceBeanName = "tokenServiceImpl";
-	
+
 	private ApplicationContext springContext;
-	
+
 	private TokenService tokenService;
-	
+
 	private static ThreadLocal<ServletRequest> localRequest;
-	
+
 	private static ThreadLocal<ServletResponse> localResponse;
-	
+
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse resp,
-			FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+			throws IOException, ServletException {
 		handleThreadLocals(req, resp);
-		
+
 		HttpServletRequest request = (HttpServletRequest) req;
 		String token = request.getHeader(tokenHeader);
-		
+
 		UserDetails ud = tokenService.getUserDetailsByToken(token);
-		
+
 		request.setAttribute(UserDetails.ATTR_CURRENT_USER, ud);
-//		new SimpleHttpServletResponseWrapper(response);
+		// new SimpleHttpServletResponseWrapper(response);
 		chain.doFilter(req, resp);
-		
+
 		logger.info("after chain.doFilter()");
 		removeThreadLocals();
 	}
@@ -65,36 +65,41 @@ public class SimpleSecurityFilter implements Filter {
 	public void init(FilterConfig config) throws ServletException {
 		this.springContext = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 		String paramTokenHeader = config.getInitParameter(TOKEN_HEADER);
-		if(StringUtils.isNotBlank(paramTokenHeader)){
+		if (StringUtils.isNotBlank(paramTokenHeader)) {
 			tokenHeader = paramTokenHeader;
 		}
-		
+
 		String paramtokenServiceBeanName = config.getInitParameter(TOKEN_SERVICE_NAME);
-		if(StringUtils.isNoneBlank(paramtokenServiceBeanName)){
+		if (StringUtils.isNoneBlank(paramtokenServiceBeanName)) {
 			tokenServiceBeanName = paramtokenServiceBeanName;
 		}
-		
+
 		tokenService = springContext.getBean(tokenServiceBeanName, TokenService.class);
-		
+
 		localRequest = new ThreadLocal<ServletRequest>();
 		localResponse = new ThreadLocal<ServletResponse>();
-		
+
 	}
-	
-	public static HttpServletRequest getLocalRequest(){
+
+	public static UserDetails getCurrentUserDetails() {
+		return (UserDetails) getLocalRequest().getAttribute(UserDetails.ATTR_CURRENT_USER);
+	}
+
+	public static HttpServletRequest getLocalRequest() {
 		return (HttpServletRequest) localRequest.get();
 	}
-	
-	public static HttpServletResponse getLocalResponse(){
+
+	public static HttpServletResponse getLocalResponse() {
 		return (HttpServletResponse) localResponse.get();
 	}
-	
+
 	@Override
 	public void destroy() {
-		
+
 	}
+
 	private static final String TOKEN_HEADER = "tokenHeader";
-	
+
 	private static final String TOKEN_SERVICE_NAME = "tokenServiceBeanName";
 
 }
