@@ -1,6 +1,7 @@
 package org.glenlivet.core;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CrudService<T extends BaseDomain> {
 	
@@ -17,5 +18,9 @@ public interface CrudService<T extends BaseDomain> {
 	public List<T> getAll();
 
 	public List<T> getAll(int offset, int limit);
+	
+	public List<T> query(Map<String, Object> query);
+	
+	public List<T> query(Map<String,Object> query, int offset, int limit);
 
 }

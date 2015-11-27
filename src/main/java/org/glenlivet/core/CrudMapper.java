@@ -1,6 +1,7 @@
 package org.glenlivet.core;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 
@@ -19,5 +20,9 @@ public interface CrudMapper<T extends BaseDomain> {
 	public List<T> getAll();
 	
 	public List<T> getAll(RowBounds rowBounds);
+	
+	public List<T> query(Map<String, Object> query);
+	
+	public List<T> query(Map<String, Object> query, RowBounds rowBounds);
 
 }

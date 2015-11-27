@@ -2,6 +2,7 @@ package org.glenlivet.core;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.glenlivet.core.mybatis.PagingBounds;
 import org.glenlivet.core.security.SimpleSecurityFilter;
@@ -72,6 +73,16 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 	@Override
 	public List<T> getAll(int offset, int limit) {
 		return getMapper().getAll(new PagingBounds(offset, limit));
+	}
+	
+	@Override
+	public List<T> query(Map<String, Object> query) {
+		return getMapper().query(query);
+	}
+	
+	@Override
+	public List<T> query(Map<String, Object> query, int offset, int limit) {
+		return getMapper().query(query, new PagingBounds(offset, limit));
 	}
 
 	protected String genId() {
