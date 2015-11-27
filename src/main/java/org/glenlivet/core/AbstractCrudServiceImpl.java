@@ -41,7 +41,8 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 		UserDetails ud = SimpleSecurityFilter.getCurrentUserDetails();
 		Assert.isNull(object.getId());
 		object.setId(genId());
-		object.setCreatedBy(ud.getId());
+		if(ud != null)
+			object.setCreatedBy(ud.getId());
 		object.setCreatedTime(new Date());
 		getMapper().add(object);
 	}
