@@ -25,6 +25,10 @@ public class PagingBounds extends RowBounds {
 	 */
 	private int limit;
 	
+	public PagingBounds(){
+		
+	}
+	
 	public PagingBounds(int offset, int limit){
 		this.offset = offset;
 		this.limit = limit;

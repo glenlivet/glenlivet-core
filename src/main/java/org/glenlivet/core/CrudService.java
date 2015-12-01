@@ -3,6 +3,8 @@ package org.glenlivet.core;
 import java.util.List;
 import java.util.Map;
 
+import org.glenlivet.core.mybatis.PagingBounds;
+
 public interface CrudService<T extends BaseDomain> {
 	
 	public void addAll(List<T> object);
@@ -20,6 +22,8 @@ public interface CrudService<T extends BaseDomain> {
 	public List<T> getAll(int offset, int limit);
 	
 	public List<T> query(Map<String, Object> query);
+	
+	public List<T> query(Map<String, Object> query, PagingBounds paging);
 	
 	public List<T> query(Map<String,Object> query, int offset, int limit);
 

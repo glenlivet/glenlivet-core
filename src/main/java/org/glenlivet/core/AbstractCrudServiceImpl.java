@@ -82,6 +82,11 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 	}
 	
 	@Override
+	public List<T> query(Map<String, Object> query, PagingBounds paging){
+		return getMapper().query(query, paging);
+	}
+	
+	@Override
 	public List<T> query(Map<String, Object> query, int offset, int limit) {
 		return getMapper().query(query, new PagingBounds(offset, limit));
 	}

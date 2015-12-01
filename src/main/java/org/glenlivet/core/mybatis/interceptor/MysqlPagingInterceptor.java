@@ -21,7 +21,7 @@ public class MysqlPagingInterceptor extends AbstractPagingInterceptor{
         }
         sqlBuilder.insert(0, "select count(1) as _count from ( ").append(" ) table_alias");
         
-        return sqlBuilder.toString();
+        return sqlBuilder.toString().toUpperCase();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class MysqlPagingInterceptor extends AbstractPagingInterceptor{
         sqlBuilder.append(") ");
         sqlBuilder.append("as table_alias limit " + bounds.getOffset() + ", " + bounds.getLimit());
         
-        return sqlBuilder.toString();
+        return sqlBuilder.toString().toUpperCase();
     }
 
 
