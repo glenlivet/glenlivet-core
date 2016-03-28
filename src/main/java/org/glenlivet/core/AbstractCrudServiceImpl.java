@@ -72,8 +72,10 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 	}
 
 	@Override
-	public List<T> getAll(int offset, int limit) {
-		return getMapper().getAll(new PagingBounds(offset, limit));
+	public PagingResult<T> getAll(int offset, int limit) {
+        PagingBounds pb = new PagingBounds(offset, limit);
+        List<T> data = getMapper().getAll(pb);
+        return PagingResult.newPagingResult(pb.getTotal(), data);
 	}
 	
 	@Override
@@ -82,13 +84,15 @@ public abstract class AbstractCrudServiceImpl<T extends BaseDomain, K extends Cr
 	}
 	
 	@Override
-	public List<T> query(Map<String, Object> query, PagingBounds paging){
-		return getMapper().query(query, paging);
+	public PagingResult<T> query(Map<String, Object> query, PagingBounds paging){
+		List<T> data = getMapper().query(query, paging);
+		return PagingResult.newPagingResult(paging.getTotal(), data);
 	}
 	
 	@Override
-	public List<T> query(Map<String, Object> query, int offset, int limit) {
-		return getMapper().query(query, new PagingBounds(offset, limit));
+	public PagingResult<T> query(Map<String, Object> query, int offset, int limit) {
+		PagingBounds pb = new PagingBounds(offset, limit);
+		return this.query(query, pb);
 	}
 
 	protected String genId() {

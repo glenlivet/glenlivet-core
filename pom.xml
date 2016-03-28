@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.glenlivet</groupId>
 	<artifactId>glenlivet-core</artifactId>
-	<version>0.2.1</version>
+	<version>0.2.2-SNAPSHOT</version>
 	<name>glenlivet-core</name>
 	<description>A jar including fundamental interfaces and classes for building Spring + MyBatis applications.</description>
 
@@ -86,6 +86,7 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
