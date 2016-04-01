@@ -27,12 +27,12 @@
 		<repository>
 			<id>glenlivet-release</id>
 			<name>Glenlivet Repository</name>
-			<url>http://www.lelyera.com/nexus/content/repositories/releases/</url>
+			<url>http://182.254.209.135/nexus/content/repositories/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>glenlivet-snapshots</id>
 			<name>Glenlivet Snapshot Repository</name>
-			<url>http://www.lelyera.com/nexus/content/repositories/snapshots/</url>
+			<url>http://182.254.209.135/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
