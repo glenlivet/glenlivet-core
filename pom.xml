@@ -21,7 +21,7 @@
 	<scm>
 		<url>https://github.com/glenlivet/glenlivet-core</url>
 		<connection>scm:git:https://github.com/glenlivet/glenlivet-core.git</connection>
-		<developerConnection>scm:git:git@github.com:glenlivet/glenlivet-core.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/glenlivet/glenlivet-core.git</developerConnection>
 	</scm>
 
 	<distributionManagement>
