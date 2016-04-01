@@ -18,6 +18,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<scm>
+		<url>https://github.com/glenlivet/glenlivet-core</url>
+		<connection>scm:git:https://github.com/glenlivet/glenlivet-core.git</connection>
+		<developerConnection>scm:git:git@github.com:glenlivet/glenlivet-core.git</developerConnection>
+	</scm>
+
 	<distributionManagement>
 		<repository>
 			<id>glenlivet-release</id>
