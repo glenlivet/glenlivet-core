@@ -42,9 +42,8 @@ public class SqlServerPagingInterceptor extends AbstractPagingInterceptor {
     /**
      * 改造sql变成支持分页的sql
      * @param targetSql 正常查询数据的sql: select id, name from user where name = ?
-     * @return WITH query AS (SELECT inner_query.*, ROW_NUMBER() OVER (ORDER BY CURRENT_TIMESTAMP) 
-     * as __mybatis_row_nr__ FROM ( select id, name from user where name = ? ) inner_query ) 
-     * SELECT * FROM query WHERE __mybatis_row_nr__ >= 3 AND __mybatis_row_nr__ <= 6 
+     * @return
+     *
      */
     @Override
     protected String getSelectPagingSql(String targetSql, PagingBounds bounds) {
