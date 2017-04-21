@@ -30,7 +30,7 @@ public class SimpleCROSFilter implements Filter {
 	
 	private String allowMethods = "POST, GET, OPTIONS, DELETE, PUT";
 	
-	private String allowHeaders = "Glenlivet-Token, Content-Type";
+	private String allowHeaders = "*";
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse res,
